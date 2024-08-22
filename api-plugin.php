@@ -35,16 +35,12 @@ class NameApi {
                 goto l1;
             } else {
                 if (is_object($found)) {
-                    // если в строке 20 возможно добавить примерно такой параметр "with_all_responses=1", то здесь оставляем прежний код.
+                    // если в строке 20 возможно заменить "with_new_response=0" на примерно такой параметр "with_all_responses=1", то здесь оставляем прежний код.
                     // иначе можно сделать примерно следующее:
                     $params = "vacancy_id={$vid}" . "&... other parameters ...";
-                    $res = $this->api_send($this->api_url . '/hr/responses_to_vacancies/?' . $params);
-                    $res_o = json_decode($res);
-                    return array(
-                      'vacancy' => $found,
-                      'responses' => $res_o
-                    );
-                    // return $found;
+                    $res = $this->api_send($this->api_url . '/hr/responses_to_vacancies/?' . $params);                    
+                    $found->responses = json_decode($res);                    
+                    return $found;
                 } else {
                     return $ret;
                 }
